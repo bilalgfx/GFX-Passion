@@ -302,32 +302,62 @@
   function initForm() {
     const form = $('#contact-form');
     const status = $('#form-status');
-    if (!form) return;
-    form.addEventListener('submit', (e) => {
+    const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+    if (!form || !submitBtn) return;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
-      const name = (data.get('name') || '').toString().trim();
+      const name  = (data.get('name')  || '').toString().trim();
       const email = (data.get('email') || '').toString().trim();
+
       if (!name || !email) {
         status.textContent = 'Please add your name and email so we can reply.';
         status.style.color = '#ff7a7a';
         return;
       }
+
       const services = $$('#chips .chip[aria-pressed="true"]').map(c => c.textContent);
-      const subject = `New brief — ${name}${data.get('company') ? ' / ' + data.get('company') : ''}`;
-      const body = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Company: ${data.get('company') || ''}`,
-        `Services: ${services.join(', ') || '(none selected)'}`,
-        '',
-        'Project:',
-        (data.get('message') || '').toString(),
-      ].join('\n');
-      const href = `mailto:gfxpassion@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = href;
-      status.textContent = 'Opening your email client… if nothing happens, send the brief to gfxpassion@outlook.com.';
-      status.style.color = '';
+
+      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true;
+      status.textContent = '';
+
+      const payload = {
+        access_key:  'e488b228-aaef-479b-9991-17c4c1ed6b02',
+        subject:     `New brief — ${name}${data.get('company') ? ' / ' + data.get('company') : ''}`,
+        from_name:   'GFX Passion Website',
+        replyto:     email,
+        name,
+        email,
+        company:     data.get('company') || '(not provided)',
+        services:    services.join(', ') || '(none selected)',
+        message:     (data.get('message') || '').toString(),
+      };
+
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        const json = await res.json();
+
+        if (res.ok && json.success) {
+          status.textContent = '✓ Brief received! We\'ll reply within 24 hours.';
+          status.style.color = '#cfff3a';
+          form.reset();
+          $$('#chips .chip[aria-pressed="true"]').forEach(c => c.setAttribute('aria-pressed', 'false'));
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch {
+        status.textContent = 'Something went wrong. Email us directly at gfxpassion@outlook.com';
+        status.style.color = '#ff7a7a';
+      } finally {
+        submitBtn.textContent = 'Send the brief →';
+        submitBtn.disabled = false;
+      }
     });
   }
 
