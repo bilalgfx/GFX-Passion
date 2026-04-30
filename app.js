@@ -324,9 +324,9 @@
         'Project:',
         (data.get('message') || '').toString(),
       ].join('\n');
-      const href = `mailto:hello@gfxpassion.studio?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const href = `mailto:gfxpassion@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       window.location.href = href;
-      status.textContent = 'Opening your email client… if nothing happens, send the brief to hello@gfxpassion.studio.';
+      status.textContent = 'Opening your email client… if nothing happens, send the brief to gfxpassion@outlook.com.';
       status.style.color = '';
     });
   }
