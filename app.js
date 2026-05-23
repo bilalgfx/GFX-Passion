@@ -18,7 +18,6 @@
 
   const WORK = [
     { c: 'Xyneris', s: 'Brand identity, 2025', span: 7, h: 480, lbl: 'campaign film still', img: 'images/work/project-xyneris.jpg' },
-    { c: 'Vertexa Solution',  s: 'Logo + web, 2025',     span: 5, h: 480, lbl: 'wordmark study',      img: 'images/work/project-vertexa solution.jpg' },
     { c: 'Crypto Learn', s: 'Branding & Web Design, 2024',      span: 4, h: 380, lbl: 'box mock',            img: 'images/work/project-cryptolearn.jpg' },
     { c: 'Ecom Web',     s: 'Web design, 2023',     span: 8, h: 380, lbl: 'product hero',        img: 'images/work/project-shoes.jpg' },
     { c: 'Gaming',      s: 'Landing Page, 2024', span: 6, h: 360, lbl: 'logo animation',      img: 'images/work/project-gaming.jpg' },
