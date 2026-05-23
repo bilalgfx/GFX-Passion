@@ -33,9 +33,6 @@
   ];
 
   const TEAM = [
-    { name: 'M Bilal - Founder',  img: 'images/team/team-bilal.jpg',   role: 'Creative Director' },
-    { name: 'Shameer - Web Developer',  img: 'images/team/team-shameer.jpg',  role: 'Web Developer' },
-    { name: 'Shahbaz - Web Designer',  img: 'images/team/team-shahbaz.jpg',  role: 'Web Designer' },
     { name: 'Qasim - Brand Designer',    img: 'images/team/team-qasim.jpg',    role: 'Brand Designer' },
   ];
 
